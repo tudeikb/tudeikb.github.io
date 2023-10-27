@@ -148,7 +148,7 @@ callouts:
     color: yellow
   important:
     title: Important
-    color: blue
+    color: yellow
   new:
     title: New
     color: green
@@ -184,3 +184,5 @@ compress_html:
   profile: false
   # ignore:
   #   envs: all
+
+math: mathjax
