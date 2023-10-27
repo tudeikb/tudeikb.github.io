@@ -8,4 +8,4 @@ permalink: /
 
 # Focus on writing good documentation
 
-<span style="font-size: 1.5em;">⓪①⓪⓪①①⓪⓪ ⓪①①⓪⓪①⓪① ⓪①①①⓪①⓪⓪ ⓪⓪①⓪⓪①①① ⓪①①①⓪⓪①① ⓪⓪①⓪⓪⓪⓪⓪ ⓪①①⓪⓪①①① ⓪①①⓪⓪①⓪① ⓪①①①⓪①⓪⓪ ⓪⓪①⓪⓪⓪⓪⓪ ⓪①①⓪①①①⓪ ⓪①①⓪⓪①⓪① ⓪①①①⓪⓪①⓪ ⓪①①⓪⓪①⓪⓪ ⓪①①①①⓪⓪① ⓪⓪①⓪①①①⓪</span>
+<img src="/assets/images/Screenshot 2023-10-27 at 21.35.36.png" width="570" height="285"/>
