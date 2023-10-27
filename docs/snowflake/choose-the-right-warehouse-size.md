@@ -7,6 +7,12 @@ nav_order: 1
 
 # Choose The Right Warehouse Size
 
+## Table of contents
+{: .no_toc .text-delta }
+
+1. TOC
+{:toc}
+
 Snowflake warehouse size impacts **costs** and **query performance**. 
 
 Snowflake warehouse is a **cluster of computational resources** used for running queries and tasks. It functions as an on-demand resource, separate from any data storage system, and is similar to a virtual machine (VM).
@@ -26,9 +32,8 @@ The number of nodes available for a query:
 | 5XL            | 256             | x    |
 | 6XL            | 512             | x    |
 
-> **Note:**
-> Both the number of nodes and the cost **double** with each increase in warehouse size.
-{: .block-warning }
+{: .important } 
+Both the number of nodes and the cost **double** with each increase in warehouse size.
 
 Steps to effectively right-size the virtual warehouse:
 
@@ -38,7 +43,7 @@ Until you find the sweet spot of maximum performance at the lowest cost.
 
 If the cost of running the warehouse doubles with each increase in size, then you would ideally want the query execution time to be at least halved to justify the increased cost from a performance standpoint. 🤔
     
-$\Rightarrow$ Choose the size that offers the best cost-to-performance ratio. 🤔
+$$\Rightarrow$$ Choose the size that offers the best cost-to-performance ratio. 🤔
 
 ## Check if the warehouse is under or over provisioned
 

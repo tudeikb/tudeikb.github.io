@@ -7,6 +7,12 @@ nav_order: 2
 
 # Monitor Credit Usage 
 
+## Table of contents
+{: .no_toc .text-delta }
+
+1. TOC
+{:toc}
+
 Snowflake provides a comprehensive view of the credits consumed by virtual warehouses, aggregated on an hourly basis (```snowflake.account_usage.warehouse_metering_history```). This aggregation encompasses all queries executed within the hour, in addition to the costs associated with maintaining the warehouse and any other related cloud services.
 
 ## Detailed Query Cost Analysis
