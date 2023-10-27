@@ -60,6 +60,9 @@ Alternatively, you can run it inside Docker while developing your site
 
     $ docker-compose up
 
+In case of changes in Dockerfile:
+    $ docker-compose up --build 
+
 ## Usage
 
 [View the documentation][Just the Docs] for usage information.
