@@ -6,7 +6,12 @@ ENV LANGUAGE en_US.UTF-8
 
 WORKDIR /usr/src/app
 
-COPY Gemfile Gemfile.lock just-the-docs.gemspec ./
-RUN gem install bundler && bundle install
+COPY Gemfile Gemfile.lock just-the-docs.gemspec ./ package*.json ./
+
+RUN gem install bundler && bundle install && \
+  apt-get update && apt-get install -y \
+  nodejs npm && \
+  rm -rf /var/lib/apt/lists/* && \
+  npm install 
 
 EXPOSE 4000
