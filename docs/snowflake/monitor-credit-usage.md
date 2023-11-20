@@ -5,13 +5,7 @@ parent: Snowflake
 nav_order: 2
 ---
 
-# Monitor Credit Usage 
-
-## Table of contents
-{: .no_toc .text-delta }
-
-1. TOC
-{:toc}
+[Snowflake Pricing Calculator](https://www.snowflake.com/pricing/)
 
 Snowflake provides a comprehensive view of the credits consumed by virtual warehouses, aggregated on an hourly basis (```snowflake.account_usage.warehouse_metering_history```). This aggregation encompasses all queries executed within the hour, in addition to the costs associated with maintaining the warehouse and any other related cloud services.
 
@@ -31,6 +25,9 @@ $$
 - **Transparency:** It fosters transparency in resource utilization, helping stakeholders to better comprehend the financial implications of query execution.
 
 ## Sample queries
+
+[Example queries (Snowflake docs)](https://docs.snowflake.com/user-guide/cost-exploring-compute#example-queries)
+
 > **Warning:**
 >
 > `snowflake.account_usage.query_history`: Latency for the view may be up to 45 minutes

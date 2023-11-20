@@ -1,9 +1,9 @@
 ---
 layout: default
-title: Snowflake
+title: Python
 nav_order: 1
 has_children: true
-permalink: /docs/snowflake
+permalink: /docs/python
 ---
 
-# Snowflake
+# Python
