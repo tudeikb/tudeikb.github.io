@@ -1,7 +1,8 @@
 ---
 layout: default
 title: Monitor Credit Usage
-parent: Snowflake
+parent: Research & Queries
+grand_parent: Snowflake
 nav_order: 2
 ---
 

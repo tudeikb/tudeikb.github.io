@@ -1,7 +1,8 @@
 ---
 layout: default
 title: Snowflake to GCS (unload)
-parent: Snowflake
+parent: Research & Queries
+grand_parent: Snowflake
 nav_order: 3
 ---
 

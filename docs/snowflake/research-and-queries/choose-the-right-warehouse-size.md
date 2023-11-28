@@ -1,7 +1,8 @@
 ---
 layout: default
 title: Choose The Right Warehouse Size
-parent: Snowflake
+parent: Research & Queries
+grand_parent: Snowflake
 nav_order: 2
 ---
 
