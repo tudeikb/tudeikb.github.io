@@ -271,18 +271,14 @@ The spilling can't always be avoided, especially for large batches of data, but 
 * Trying to split the processing into several steps (for example by replacing the CTEs with temporary tables).
 * Using a larger warehouse - this effectively means more memory and more local disk space.
 
+***
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+> You have two virtual warehouses in your Snowflake account. If one of them updates the data in the storage layer, when will the other one see it?
+> 
+> ❌ Once all the compute resources are provisioned for the second warehouse.
+> 
+> ❌ After an average time of 5 seconds. 
+>
+> ✅ **Immediately.**
+>
+> ❌ After the sync process.

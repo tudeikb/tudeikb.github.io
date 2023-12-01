@@ -10,7 +10,7 @@ nav_order: 1
 >
 > ❌ Storage integration
 >
-> ✅ Stage
+> ✅ **Stage**
 >
 > ❌ Role
 >

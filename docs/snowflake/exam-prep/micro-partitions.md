@@ -33,3 +33,18 @@ nav_order: 1
 ***
 
 Query pruning consists of analyzing the smallest number of micro-partitions to solve a query. This technique retrieves all the necessary data to give a solution without looking at all the micro-partitions, saving a lot of time to return for the result.
+
+***
+
+#### Data compression
+{: .fs-5 }
+
+> How is table data compressed in Snowflake?
+>
+> ❌ Each micro-partition is compressed as it is written into cloud storage using GZIP. 
+>
+> ❌ The text data in a micro-partition is compressed with GZIP but other types are not compressed. 
+>
+> ✅ **Each column is compressed as it is stored in a micro-partition.**
+>
+> ❌ The micro-partitions are stored in compressed cloud storage and the cloud storage handles compression.

@@ -6,6 +6,8 @@ grand_parent: Snowflake
 nav_order: 1
 ---
 
+[Account usage reference](https://docs.snowflake.com/en/sql-reference/account-usage)
+
 #### LOGIN_HISTORY View
 {: .fs-5 }
 
@@ -31,6 +33,38 @@ The `LOGIN_HISTORY` family of table functions can be used to query login attempt
 
 **These functions return login activity within the last 7 days.**
 
+***
 
+> Which view in SNOWFLAKE.ACCOUNT_USAGE shows from which IP address a user connected to Snowflake?
+>
+> ✅ **LOGIN_HISTORY**
+>
+> ❌ ACCESS_HISTORY
+>
+> ❌ SESSIONS
+> 
+> ❌ QUERY_HISTORY
 
+*** 
 
+`LOGIN_HISTORY` → query login attempts within last 365 days
+
+`ACCESS_HISTORY` → Enterprise edition or higher; related with data lineage and dependencies, shows accessed data objects.
+
+`SESSIONS` → information on sessions, including authentication method and login events (there is no information about IP addresses)
+
+`QUERY_HISTORY` → query history by various dimensions within last 365 days
+
+***
+
+> What are the key characteristics of ACСOUNT_USAGE views? (Choose two.)
+>
+> ✅ **The data latency can vary from 45 minutes to 3 hours**
+>
+> ❌ The historical data is not retained
+>
+> ❌ There is no data latency
+> 
+> ✅ **Records for dropped objects are included in each view**
+>
+> ❌ The historical data can be retained from 7 days to 6 months
