@@ -58,19 +58,29 @@ All three layers of Snowflake’s architecture (storage, compute, and cloud serv
 5. SQL Development & Management → e.g. DBeaver
 6. Native Programming Interfaces → Go, Java, .NET, Node.js, C, PHP, Python
 
+[Snowflake Partner Connect](https://docs.snowflake.com/en/user-guide/ecosystem-partner-connect)
+
+Partner Connect lets you easily create trial accounts with selected Snowflake business partners and integrate these accounts with Snowflake. This feature provides a convenient option for trying various 3rd-party tools and services, and then adopting the ones that best meet your business needs.
+
+Partner Connect is limited to <u>account administrators</u> (i.e. users with the `ACCOUNTADMIN` role) who have a <u>verified email address</u> in Snowflake.
+
 ### Overview of Snowflake editions
+
+[Snowflake Editions](https://docs.snowflake.com/en/user-guide/intro-editions)
 
 Comparison of key features in different editions:
 
-| Feature                        | Standard       | Enterprise     | Business Critical |
-|--------------------------------|----------------|----------------|-------------------|
-| Time Travel                    | Maximum 1 day  | Maximum 90 days| Maximum 90 days   |
-| Multi-Cluster VW               | ❌ No           | ✅ Yes         | ✅ Yes             |
+| Feature                        | Standard       | Enterprise     | Business Critical  |
+|--------------------------------|----------------|----------------|--------------------|
+| Time Travel                    | Maximum 1 day  | Maximum 90 days| Maximum 90 days    |
+| Multi-Cluster Warehouses       | ❌ No           | ✅ Yes         | ✅ Yes             |
 | Materialized Views             | ❌ No           | ✅ Yes         | ✅ Yes             |
 | Column Level Security          | ❌ No           | ✅ Yes         | ✅ Yes             |
 | Access History                 | ❌ No           | ✅ Yes         | ✅ Yes             |
+| Query Acceleration Service     | ❌ No           | ✅ Yes         | ✅ Yes             |
+| Search Optimization Service    | ❌ No           | ✅ Yes         | ✅ Yes             |
 | Query Statement Encryption     | ❌ No           | ❌ No          | ✅ Yes             |
-| Failover/Failback              | ❌ No           | ❌ No          | ✅ Yes             |
+| Failover/Failback & Replication of objects other than database and share | ❌ No           | ❌ No          | ✅ Yes             |
 | Private Link                   | ❌ No           | ❌ No          | ✅ Yes             |
 | Tri-Secret Secure Encryption   | ❌ No           | ❌ No          | ✅ Yes             |
 
@@ -133,6 +143,18 @@ You have two virtual warehouses in your Snowflake account. If one of them update
 > C. <u>Immediately.</u>
 >
 > D. After the sync process.
+
+***
+
+Which role is required to initiate a trial in Snowflake Partner Connect?
+
+> A. <u>ACCOUNTADMIN</u>
+>
+> B. SECURITYADMIN
+>
+> C. SYSADMIN
+>
+> D. USERADMIN
 
 ************************************************************************************
 
@@ -294,11 +316,26 @@ Parquet row groups: 16 - 256 MB (Snowflake can operate on different row groups u
 All other supported file formats: 16 - 256 MB
 
 ### View types
-Non-materialized (standard) views → a view is basically a named definition of a query. A non-materialized view’s results are created by executing the query at the time that the view is referenced in a query. 
+#### Non-materialized (standard, regular) views 
 
-Materialized views → a materialized view’s results are stored which allows for faster access but requires storage space and active maintenance, both of which incur additional costs. 
+* A view is basically a named definition of a query.
+* A non-materialized view’s results are created by executing the query at the time that the view is referenced in a query. 
+* Most commonly used.
+* Underlying DDL available to any role with access to the view.
 
-Secure views → the view definition and details are visible only to authorized users (with the role that owns the view) ⇒ improved data privacy and data sharing. Both non-materialized and materialized views can be defined as secure. Secure views can be slower than non-secure views. 
+#### Secure views 
+
+* The view definition and details are visible only to authorized users (with the role that owns the view) ⇒ improved data privacy and data sharing. 
+* Both non-materialized and materialized views can be defined as secure. 
+* Snowflake query optimizer behaves differently when running the SQL contained in a secure view so that it doesn't accidentally reveal things about the underlying data.
+* Secure views can be slower than non-secure views, because the optimizer isn't used the same way.
+
+#### Materialized views 
+
+* A materialized view’s results are stored which allows for faster access but requires storage space and active maintenance, both of which incur additional costs. 
+* Behave more like a table.
+* In Snowflake, these are auto-refreshed.
+* Can provide cost savings, but are inflexible and somewhat limited in use.
 
 ### Data types
 
@@ -313,6 +350,31 @@ Secure views → the view definition and details are visible only to authorized 
 #### Tasks
 
 ### Pipes
+
+[Snowpipe](https://docs.snowflake.com/en/user-guide/data-load-snowpipe-intro)
+[Managing Snowpipe](https://docs.snowflake.com/en/user-guide/data-load-snowpipe-manage)
+
+Snowpipe enables <u>loading data from files as soon as they’re available in a stage</u>. The data is loaded according to the COPY statement defined in a referenced pipe.
+
+The COPY statement identifies the source location of the data files (i.e., a stage) and a target table. <u>All data types are supported</u>.
+
+Two mechanisms for detecting the staged files:
+- Automating Snowpipe using cloud messaging
+- Calling Snowpipe REST endpoints
+
+Snowpipe load history is stored in the metadata of the pipe for <u>14 days</u>. Must be requested from Snowflake via a REST endpoint, SQL table function, or ACCOUNT_USAGE view.
+
+<u>When a pipe is recreated, the load history is dropped</u>. In general, this condition only affects users if they subsequently execute an `ALTER PIPE … REFRESH` statement on the pipe. Doing so could load duplicate data from staged files in the storage location for the pipe if the data was already loaded successfully and the files were not deleted subsequently.
+
+Bulk data load is stored in the metadata of the target table for <u>64 days</u>. Available upon completion of the COPY statement as the statement output.
+
+To optimize the number of parallel operations for a load, it is recommended to produce data files roughly <u>100-250 MB (or larger) in size compressed</u> and <u>staging files once per minute</u>. 
+
+If a <u>data loading operation</u> continues beyond the <u>maximum allowed duration of 24 hours</u>, it could be aborted without any portion of the file being committed.
+
+Not all COPY INTO options are available during pipe creation (e.g. `ON_ERROR` or `VALIDATION_MODE` are <u>not</u> available). [See: Usage Notes](https://docs.snowflake.com/en/sql-reference/sql/create-pipe#usage-notes)
+
+Snowflake automatically manages the compute required to execute the Pipe's `COPY INTO` commands.
 
 ### Shares
 
@@ -341,6 +403,32 @@ A role is created and owns 2 tables. This role is then dropped. Who will now own
 > C. The user that deleted the role
 >
 > D. The tables are now orphaned
+
+***
+
+When a Pipe is recreated using the CREATE OR REPLACE PIPE command:
+
+> A. Previously loaded files will be ignored.
+>
+> B. <u>The Pipe load history is reset to empty.</u>
+>
+> C. Previously loaded files will be purged.
+>
+> D. The REFRESH parameter is set to TRUE.
+
+***
+
+Which of the following is true of Snowpipe via REST API? (Choose two.)
+
+> A. Snowpipe removes files after they have been loaded.
+>
+> B. <u>Snowpipe keeps track of which files it has loaded.</u>
+>
+> C. All COPY INTO options are available during pipe creation.
+>
+> D. <u>Snowflake automatically manages the compute required to execute the Pipe's COPY INTO commands.</u>
+>
+> E. You can only use it on Internal Stages.
 
 ************************************************************************************
 

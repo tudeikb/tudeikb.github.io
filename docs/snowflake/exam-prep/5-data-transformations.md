@@ -82,3 +82,17 @@ How can this issue be resolved?
 > C. Set STRIP_OUTER_ARRAY=TRUE in the COPY INTO command.
 > 
 > D. <u>Split the file into multiple files in the recommended size range (100 MB - 250 MB).</u>
+
+***
+
+Which file functions are non-deterministic? (Select TWO)
+
+> A. <u>BUILD_SCOPED_FILE_URL</u>
+>
+> B. BUILD_STAGE_FILE_URL
+>
+> C. GET_ABSOLUTE_PATH
+> 
+> D. <u>GET_PRESIGNED_URL</u>
+>
+> E. GET_RELATIVE_PATH

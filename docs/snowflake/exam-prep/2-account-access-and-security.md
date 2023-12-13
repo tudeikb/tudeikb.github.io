@@ -56,6 +56,12 @@ What can be used to allow or block connections to a Snowflake account from confi
 
 #### Access control frameworks
 
+Snowflake’s approach to access control combines aspects from both of the following models:
+
+<u>Discretionary Access Control (DAC)</u>: Each object has an owner, who can in turn grant access to that object.
+
+<u>Role-based Access Control (RBAC)</u>: Access privileges are assigned to roles, which are in turn assigned to users.
+
 #### Access control privileges
 
 ### Outline how privileges can be granted and revoked
@@ -65,6 +71,36 @@ What can be used to allow or block connections to a Snowflake account from confi
 `SHOW GRANTS TO ROLE...` → Lists all privileges and roles granted to the role. 
 
 ### Explain role hierarchy and privilege inheritance
+
+The default system-defined roles in Snowflake:
+
+#### ACCOUNTADMIN
+
+#### SECURITYADMIN
+
+#### ORGADMIN
+
+The organization administrator (`ORGADMIN`) system role is responsible for managing operations at the organization level.
+
+* Create an account in the organization.
+* View/show all accounts within the organization.
+* View/show a list of regions enabled for the organization.
+* View usage information for all accounts in the organization. 
+* Enable database replication for an account in the organization.
+
+Snowflake provides historical usage data for all accounts in your organization via views in the `ORGANIZATION_USAGE` schema in a shared database `SNOWFLAKE`.
+
+DDL examples:
+* `CREATE ACCOUNT`
+* `DROP ACCOUNT`
+* `SHOW ORGANIZATION ACCOUNTS`
+* `UNDROP ACCOUNT` 
+
+#### USERADMIN
+
+#### SYSADMIN
+
+#### PUBLIC
 
 ### 2.2: Practice Questions
 
@@ -88,6 +124,17 @@ Which statement will display the information?
 
 ### Organizations
 
+An organization is a first-class Snowflake object that <u>links the accounts owned by your business entity</u>. Organizations simplify account management and billing, Replication and Failover/Failback, Snowflake Secure Data Sharing, and other account administration tasks.
+
+This feature allows organization administrators to <u>view, create, and manage all of your accounts across different regions and cloud platforms</u>.
+
+Benefits:
+* A central view of all accounts within your organization.
+* Self-service account creation.
+* Data availability and durability by leveraging data replication and failover. 
+* Seamless data sharing with Snowflake consumers across regions.
+* Ability to monitor and understand usage across all accounts in the organization.
+
 ### Secure views
 
 ### Secure functions
@@ -105,6 +152,8 @@ The schema contains the following objects:
 - Table functions for historical and usage data across your account.
 
 ### Account usage
+
+The `SNOWFLAKE` database contains information about account usage. It is automatically added by Snowflake to each new account. It is sometimes called the <u>"Account Usage Share"</u> because it is shared by Snowflake with customers.
 
 `LOGIN_HISTORY` view → query <u>login attempts</u> by Snowflake users within the <u>last 365 days (1 year)</u>. Includes IP address where the login request originated from, error code, if the request was not successful and other. <u>Latency for the view may be up to 120 minutes (2 hours)</u>.
 
@@ -202,3 +251,15 @@ What are the key characteristics of ACСOUNT_USAGE views? (Choose two.)
 > D. <u>Records for dropped objects are included in each view</u>
 >
 > E. The historical data can be retained from 7 days to 6 months
+
+*** 
+
+What is an organization in Snowflake and what is an example of the benefits of using one?
+
+> A. An organization provides a mechanism for the customer to classify data categories across tables and databases.
+>
+> B. An organization allows a customer to manage account objects such as databases, schemas, tables, and views and to organize them easily. 
+>
+> C. An organization allows a customer to self-manage Snowflake account creation including synching users, roles, and databases across Snowflake accounts.
+>
+> D. <u> An organization allows a customer to conduct self-service Snowflake account creation and also self-manage and monitor those accounts individually and as a group across all accounts</u>.
