@@ -16,8 +16,6 @@ nav_order: 1
 </details>
 
 ## 3.1 Explain the use of the Query Profile.
-[Analyzing Queries Using Query Profile](https://docs.snowflake.com/en/user-guide/ui-query-profile)
-
 Query Profile, available through the classic web interface, provides execution details for a query. For the selected query, it provides a <u>graphical representation of the main components of the processing plan for the query, with statistics for each component, along with details and statistics for the overall query</u>.
 
 Query profile interface elements:
@@ -27,9 +25,7 @@ Query profile interface elements:
 * **Overview**: The right pane displays an overview of the query profile. The display changes to operator details when an operator node is selected.
 
 ### Explain plans
-[EXPLAIN](https://docs.snowflake.com/en/sql-reference/sql/explain)
-
-Returns the <u>logical execution plan</u> for the specified SQL statement. An explain plan shows the operations (for example, table scans and joins) that Snowflake would perform to execute the query.
+`EXPLAIN` returns the <u>logical execution plan</u> for the specified SQL statement. An explain plan shows the operations (for example, table scans and joins) that Snowflake would perform to execute the query.
 
 `EXPLAIN` <u>compiles the SQL statement, but does not execute it</u>, so it <u>does not require a running warehouse</u>.
 
@@ -40,9 +36,6 @@ To post-process the output of this command, you can:
 * Generate the output in JSON format and insert the JSON-formatted output into a table for analysis later. If you store the output in JSON format, you can use the function `SYSTEM$EXPLAIN_JSON_TO_TEXT` or `EXPLAIN_JSON` to convert the JSON to a more human readable format (either tabular or formatted text).
 
 ### Data spilling
-
-[Performance impact from local and remote disk spilling](https://community.snowflake.com/s/article/Performance-impact-from-local-and-remote-disk-spilling)
-
 When Snowflake warehouse <u>cannot fit an operation in memory<u>, it starts <u>spilling (storing) data</u> first to the <u>local disk of a warehouse node</u>, and then to <u>remote cloud-provider storage</u>.
 
 Snowflake first tries to temporarily store the data on the warehouse local disk. As this means extra IO operations, any query that requires spilling will take longer than a similar query running on similar data that is capable to fit the operations in memory.
@@ -58,16 +51,11 @@ The spilling can't always be avoided, especially for large batches of data, but 
 - Trying to split the processing into several steps (for example by replacing the CTEs with temporary tables).
 - Using a larger warehouse - this effectively means more memory and more local disk space.
 
-[Resolving Memory Spillage](https://docs.snowflake.com/en/user-guide/performance-query-warehouse-memory)
-
 When memory spillage is the issue, you can <u>convert your existing warehouse to a Snowpark-optimized warehouse</u>, which provides <u>16x more memory per node and 10x the local cache</u> compared to a standard warehouse. Though a larger warehouse also has more memory available, a query might not require its expanded compute resources.
 
 When a query requires <u>additional memory without additional compute</u>, it is <u>more cost effective to switch to a Snowpark-optimized warehouse</u> rather than increasing the size of the warehouse.
 
 ### Use of the data cache
-
-[Caching in Snowflake](https://thinketl.com/caching-in-snowflake/#:~:text=merely%20few%20milliseconds.-,4.,without%20reading%20the%20table%20data.)
-
 There are three types of Cache in Snowflake which improve the query performance:
 
 - Query Result Cache
@@ -108,7 +96,6 @@ Each function is optimized for querying along the specified dimension.
 The Account Usage `QUERY_HISTORY` view can be used to query Snowflake query history by various dimensions (time range, session, user, warehouse, etc.) within the <u>last 365 days (1 year)</u>.
 
 ### 3.1: Practice Questions
-
 A Snowflake query took 40 minutes to run. The results indicate that ‘Bytes spilled to local storage’ was a large number.
 
 What is the issue and how can it be resolved?
@@ -275,7 +262,6 @@ Warehouses are required for queries, as well as all DML operations, including lo
 Warehouses can be <u>started and stopped at any time</u>. They can also be <u>resized at any time, even while running</u>, to accommodate the need for more or less compute resources.
 
 ### Multi-cluster warehouses
-
 Multi-cluster warehouses are designed specifically for handling <u>queuing and performance</u> issues related to <u>large numbers of concurrent users and/or queries</u>. In addition, multi-cluster warehouses can help automate this process if your number of users/queries tend to fluctuate.
 
 They are **<u>not</u>** as beneficial for improving the performance of slow-running queries or data loading. For these types of operations, resizing the warehouse provides more benefits.
@@ -330,7 +316,6 @@ Default size:
 ### Warehouse settings and access
 
 ### 3.2: Practice Questions
-
 A user has a multi-cluster virtual warehouse with the standard scaling policy. There is a single large cluster running, and a query comes in that gets queued. What will happen next?
 
 > A. Snowflake will immediately scale the cluster up to an extra-large cluster and run the query that was queued. 
@@ -415,17 +400,11 @@ How should a virtual warehouse be configured if a user wants to ensure that addi
 >
 > D. <u>Use the standard warehouse scaling policy</u>
 
-***
-
 ************************************************************************************
 
 ## 3.3 Outline virtual warehouse performance tools
 
-[Optimizing Warehouses for Performance](https://docs.snowflake.com/user-guide/performance-query-warehouse)
-
 #### Reduce queues 
-[Reducing Queues](https://docs.snowflake.com/user-guide/performance-query-warehouse-queue)
-
 Minimize queuing can improve performance because the time between submitting a query and getting its results is longer when the query must wait in a queue before starting.
 
 To determine if a particular warehouse is experiencing queues: Snowsight > Admin > Warehouses > Warehouse Activity > Queued load.
@@ -436,8 +415,6 @@ Options to stop warehouse queuing:
 * If you are already using a multi-cluster warehouse, increase the maximum number of clusters.
 
 #### Resolve memory spillage
-[Resolving Memory Spillage](https://docs.snowflake.com/en/user-guide/performance-query-warehouse-memory)
-
 Adjusting the available memory of a warehouse can improve performance because a query runs substantially slower when a warehouse runs out of memory, which results in bytes “spilling” onto storage.
 
 #### Increase warehouse size
@@ -446,21 +423,14 @@ The larger a warehouse, the more compute resources are available to execute a qu
 Using a larger warehouse has the biggest impact on larger, more complex queries, and may not improve the performance of small, basic queries.
 
 #### Try query acceleration
-[Using the Query Acceleration Service](https://docs.snowflake.com/user-guide/query-acceleration-service)
-[Trying Query Acceleration](https://docs.snowflake.com/user-guide/performance-query-warehouse-qas)
-
 The query acceleration service <u>offloads portions of query processing to serverless compute resources</u>, which speeds up the processing of a query while reducing its demand on the warehouse’s compute resources.
 
 #### Optimize the warehouse cache
-[Optimizing the Warehouse Cache](https://docs.snowflake.com/user-guide/performance-query-warehouse-cache)
-
 A running warehouse maintains a cache of table data that can be accessed by queries running on the same warehouse. Query performance improves if a query can read from the warehouse’s cache instead of from tables.
 
 The auto-suspension setting of the warehouse can have a direct impact on query performance because the cache is dropped when the warehouse is suspended. If a warehouse is running frequent and similar queries, it might not make sense to suspend the warehouse in between queries because the cache might be dropped before the next query is executed.
 
 #### Limit concurrently running queries
-[Limiting Concurrently Running Queries](https://docs.snowflake.com/user-guide/performance-query-warehouse-max-concurrency)
-
 Limiting the number of queries that are running concurrently in a warehouse can improve performance because there are fewer queries putting demands on the warehouse’s resources.
 
 You can use the `MAX_CONCURRENCY_LEVEL` parameter to limit the number of concurrent queries running in a warehouse.
@@ -474,7 +444,6 @@ The <u>default maximum concurrency level is 8</u>.
 Adjusting the `STATEMENT_QUEUED_TIMEOUT_IN_SECONDS` parameter can cancel queries rather than let them remain in the queue for an extended period of time.
 
 ### Monitoring warehouse loads
-
 <u>Warehouse contention</u> refers to a situation where multiple queries or tasks are competing for resources within the same virtual warehouse, leading to decreased performance and longer processing times. 
 
 Contention occurs when multiple queries or jobs are executed simultaneously in the same warehouse, and these queries collectively demand more resources than the warehouse can provide. This leads to a queue forming, where some queries must wait for others to complete before they can access the necessary resources.
@@ -487,7 +456,6 @@ Important parameters:
 - `STATEMENT_TIMEOUT_IN_SECONDS` → Amount of time, in seconds, after which a running SQL statement is canceled by the system.
 
 ### Scaling up compared to scaling out
-
 Examples:
 - Accomodate fluctuations in workload $$\Rightarrow$$ concurrency $$\Rightarrow$$ scale out (multi-cluster warehouse)
 - Accomodate more queries $$\Rightarrow$$ concurrency $$\Rightarrow$$ scale out (multi-cluster warehouse)
@@ -495,8 +463,6 @@ Examples:
 - Accomodate more users $$\Rightarrow$$ concurrency $$\Rightarrow$$ scale out (multi-cluster warehouse)
 
 ### Resource monitors
-[Working with Resource Monitors](https://docs.snowflake.com/en/user-guide/resource-monitors)
-
 A resource monitor can be used to <u>monitor credit usage</u> by virtual warehouses and the cloud services needed to support those warehouses. If desired, the warehouse can be suspended when it reaches a credit limit.
 
 Limits can be set for a <u>specified interval or date range</u>.
@@ -525,8 +491,6 @@ Each resource monitor can have the following actions:
 * Up to five Notify actions.
 
 ### Query acceleration service
-[Query Acceleration Service in Snowflake](https://thinketl.com/query-acceleration-service-in-snowflake/)
-
 When a warehouse has <u>outlier queries</u> (i.e. queries that use more resources than a typical query), the query acceleration service might also improve the performance of the warehouse’s other queries because the <u>extra computing demands of the outlier queries are offloaded to serverless compute resources</u>.
 
 Examples of workloads that might benefit from the query acceleration service include <u>ad hoc analytics</u>, workloads with <u>unpredictable data volume per query</u>, and queries with <u>large scans</u> and <u>selective filters</u>.
@@ -543,7 +507,6 @@ Few key points related to Scale Factor:
 * Snowflake automatically determines whether the query would benefit from using the Query Acceleration Service, and will only deploy this if it’s estimated to improve query performance and overall throughput.
 
 ### 3.3: Practice Questions
-
 During periods of warehouse contention, which parameter controls the maximum length of time a warehouse will hold a query for processing?
 
 > A. STATEMENT_TIMEOUT_IN_SECONDS
@@ -559,14 +522,43 @@ During periods of warehouse contention, which parameter controls the maximum len
 ## 3.4 Optimize query performance.
 
 ### Describe the use of materialized views
+Materialized views are particularly useful when:
+
+- Query results contain a small number of rows and/or columns relative to the base table (the table on which the view is defined).
+- Query results contain results that require significant processing, including:
+  - Analysis of semi-structured data.
+  - Aggregates that take a long time to calculate.
+- The query is on an external table (i.e. data sets stored in files in an external stage), which might have slower performance compared to querying native database tables.
+- The view’s base table does not change frequently.
 
 ### Use of specific SELECT commands
 
+1. **Column Selection:**
+   - Select only the columns that are needed for the query. Avoid using `SELECT *` if you don't need all columns, as unnecessary data retrieval can impact performance.
+
+2. **Filtering:**
+   - Apply filters to limit the amount of data retrieved. Use the WHERE clause to filter rows based on specific conditions, and consider using indexed columns for better performance.
+
+3. **Sorting:**
+   - If sorting is necessary, use the ORDER BY clause judiciously. Sorting large result sets can be resource-intensive, so try to limit the sorting to the essential columns.
+
+4. **Aggregation:**
+   - Use aggregate functions wisely. Aggregations can be resource-intensive, especially on large datasets. Be selective about the columns you aggregate and consider using appropriate indexes.
+
+5. **JOIN Operations:**
+   - Optimize JOIN operations by choosing the most efficient JOIN type (e.g., INNER JOIN, LEFT JOIN) based on your data relationships. Ensure that join columns are indexed when appropriate.
+
+6. **Subqueries:**
+   - Evaluate the use of subqueries carefully. Subqueries can impact performance, especially if they are not optimized. Consider alternatives such as JOINs or temporary tables if feasible.
+
 ### Clustering
+Snowflake clustering is a technique employed in Snowflake tables to group related rows together within the same micro-partition, thereby enhancing query performance for accessing these rows. By organizing the data in a clustered manner, Snowflake can avoid scanning unnecessary micro-partitions during query execution.
+
+To achieve effective Snowflake clustering, it is crucial to choose appropriate Snowflake clustering keys that align with the data access patterns and query requirements.
+
+The clustering depth for a populated table measures the average depth (1 or greater) of the overlapping micro-partitions for specified columns in a table. The smaller the average depth, the better clustered the table is with regards to the specified columns.
 
 ### Search optimization service
-[Search Optimization Service in Snowflake](https://thinketl.com/search-optimization-service-in-snowflake/)
-
 The Search Optimization Service in Snowflake is a query optimization service that can enhance the performance of certain types of lookup and analytical queries which retrieves a small subset of results from large data volumes.
 
 When Search Optimization Service is enabled on a table, it creates an additional data set called Search Access Path that keeps tracks of all the micro partitions where the values of the table are stored. The Search Access Path improves query performance by reducing the amount of partitions scanned during the table scan operation instead of searching all the partitions of the table.
@@ -586,11 +578,19 @@ The following are the recommended checks to consider a table and its columns for
 * The table is either not clustered or the table is frequently queried on columns other than the cluster key columns.
 
 ### Persisted query results
+When a query is executed, the result is <u>persisted (i.e. cached)</u> for a period of time. At the end of the time period, the result is purged from the system.
+
+Snowflake uses persisted query results to avoid re-generating results when nothing has changed (i.e. <u>“retrieval optimization”</u>). 
+
+<u>For persisted query results of all sizes, the cache expires after 24 hours.</u>
+
+Note that the <u>security token</u> used to access <u>large persisted query results (i.e. greater than 100 KB in size) expires after 6 hours</u>. A new token can be retrieved to access results while they are still in cache. Smaller persisted query results do not use an access token.
+
+In some cases, you might want to perform further processing on the result of a query that you’ve already run. Post-processing can be performed using the <u>`RESULT_SCAN` table function</u>. The function returns the results of the previous query as a “table” and a new query can then be run on the tabular data.
 
 ### Understanding the impact of different types of caching
 
 #### Metadata Cache
-
 Snowflake stores certain information about each table like <u>row count, min/max values</u> of a column in its <u>metadata in the cloud services layer</u> so that certain queries about the table can be easily answered <u>without reading the table data</u>. This table information stored in metadata is referred as Metadata Cache in Snowflake.
 
 The information that Snowflake stores about each table in metadata include:
@@ -601,7 +601,6 @@ The information that Snowflake stores about each table in metadata include:
 Every time when data in table is either inserted, updated or deleted, new micro partitions are written and Snowflake keeps track of these changes in the metadata. Hence <u>latest data of above discussed details of a table is always available in the metadata cache</u>.
 
 #### Query Result Cache 
-
 When a query is executed in Snowflake, the <u>query results are persisted (stored) for a defined period of time</u>. The results are purged from the system at the end of time period. The persisted query results are referred to as Query Result Cache.
 
 The Query Result cache helps avoiding re-executing the queries when a same query is submitted by user which was previously executed and there is no change in the underlying table data.
@@ -620,7 +619,6 @@ The result cache expiry is extended for an additional 24 hours if a subsequent q
 The result cache expiry is <u>extended up to a maximum of 31 days</u> from the date and time the query was first executed. After 31 days, the result cache is purged and the next time the query is submitted, a new result cache is generated and persisted.
 
 #### Virtual Warehouse Cache
-
 Every time a virtual warehouse extracts data from a table, it <u>caches that data locally</u>. The subsequent queries can reuse the data in the cache rather than reading from the table in the cloud storage. This cache which gets stored at the local disk is referred to as Virtual Warehouse Cache or Local Disk Cache in Snowflake.
 
 Reading data from a local cache is a much more efficient operation than reading data from the remote cloud storage. Therefore the warehouse cache improves performance of queries which can take advantage of it.

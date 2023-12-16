@@ -47,10 +47,6 @@ The cloud services layer is a collection of services that coordinate activities 
 All three layers of Snowflake’s architecture (storage, compute, and cloud services) are deployed and managed entirely on a selected cloud platform.
 
 ### Cloud partner categories
-[Snowflake Ecosystem](https://docs.snowflake.com/en/user-guide/ecosystem)
-
-[All Partners & Technologies (Alphabetical)](https://docs.snowflake.com/en/user-guide/ecosystem-all)
-
 1. Data Integration → e.g. Fivetran, Qlik, Matillion, dbt
 2. Business Intelligence → e.g. Tableau, Power BI, Looker
 3. ML & Data Science → e.g. DataRobot, Alteryx, Dataiku, Databricks
@@ -58,16 +54,11 @@ All three layers of Snowflake’s architecture (storage, compute, and cloud serv
 5. SQL Development & Management → e.g. DBeaver
 6. Native Programming Interfaces → Go, Java, .NET, Node.js, C, PHP, Python
 
-[Snowflake Partner Connect](https://docs.snowflake.com/en/user-guide/ecosystem-partner-connect)
-
 Partner Connect lets you easily create trial accounts with selected Snowflake business partners and integrate these accounts with Snowflake. This feature provides a convenient option for trying various 3rd-party tools and services, and then adopting the ones that best meet your business needs.
 
 Partner Connect is limited to <u>account administrators</u> (i.e. users with the `ACCOUNTADMIN` role) who have a <u>verified email address</u> in Snowflake.
 
 ### Overview of Snowflake editions
-
-[Snowflake Editions](https://docs.snowflake.com/en/user-guide/intro-editions)
-
 Comparison of key features in different editions:
 
 | Feature                        | Standard       | Enterprise     | Business Critical  |
@@ -350,10 +341,6 @@ All other supported file formats: 16 - 256 MB
 #### Tasks
 
 ### Pipes
-
-[Snowpipe](https://docs.snowflake.com/en/user-guide/data-load-snowpipe-intro)
-[Managing Snowpipe](https://docs.snowflake.com/en/user-guide/data-load-snowpipe-manage)
-
 Snowpipe enables <u>loading data from files as soon as they’re available in a stage</u>. The data is loaded according to the COPY statement defined in a referenced pipe.
 
 The COPY statement identifies the source location of the data files (i.e., a stage) and a target table. <u>All data types are supported</u>.
@@ -381,7 +368,6 @@ Snowflake automatically manages the compute required to execute the Pipe's `COPY
 ### Sequences
 
 ### 1.3: Practice Questions
-
 Which Snowflake table type is only visible to the user who creates it, can have the same name as permanent tables in the same schema, and is dropped at the end of the session?
 
 > A. Transient

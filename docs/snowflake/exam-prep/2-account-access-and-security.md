@@ -16,8 +16,8 @@ nav_order: 1
 </details>
 
 ## 2.1 Outline security principles
-### Network security and policies
 
+### Network security and policies
 Network policies allow restricting access to your account based on user IP address. Effectively, a network policy enables you to create an <u>IP allowed list</u>, as well as an <u>IP blocked list</u>, if desired.
 
 By default, Snowflake allows users to connect to the service from any computer or device IP address. A security administrator (or higher) can create a network policy to allow or deny access to a single IP address or a list of addresses. Network policies currently <u>support only Internet Protocol version 4 (i.e. IPv4) addresses</u>.
@@ -31,6 +31,9 @@ When a network policy includes values in both the allowed and blocked IP address
 ### Multi-Factor Authentication (MFA)
 
 ### Federated authentication
+In a federated environment, user authentication is separated from user access through the use of one or more external entities that provide independent authentication of user credentials. The authentication is then passed to one or more services, enabling users to access the services through SSO.
+
+Snowflake supports most SAML 2.0-compliant vendors as an IdP (Identity provider).
 
 ### Key pair authentication
 
@@ -63,6 +66,15 @@ Snowflake’s approach to access control combines aspects from both of the follo
 <u>Role-based Access Control (RBAC)</u>: Access privileges are assigned to roles, which are in turn assigned to users.
 
 #### Access control privileges
+
+| Role           | Account Panel | Notifications | Create Shares | Network Policies | Use                    |
+|----------------|---------------|----------------|---------------|-------------------|------------------------|
+| ACCOUNTADMIN   | ✅ yes         | ✅ yes         | ✅ yes        | ✅ yes            | Top level role          |
+| SECURITYADMIN  | ✅ yes         | ❌ no          | ❌ no         | ✅ yes            | Manage users & roles & network policies |
+| SYSADMIN       | ❌ no          | ❌ no          | ❌ no         | ❌ no             | Manage objects          |
+| USERADMIN      | ❌ no          | ❌ no          | ❌ no         | ❌ no             | Manage users & roles   |
+| PUBLIC         | ❌ no          | ❌ no          | ❌ no         | ❌ no             | Lowest role             |
+| CUSTOM         | ❌ no          | ❌ no          | ❌ no         | ❌ no             | Depends on assigned privileges |
 
 ### Outline how privileges can be granted and revoked
 
@@ -138,12 +150,10 @@ Benefits:
 ### Secure views
 
 ### Secure functions
+To help ensure that sensitive information is concealed from users who should not have access to it, you can use the `SECURE` keyword when creating a <u>user-defined function (UDF) and stored procedure</u>.
 
 ### Information schemas
-
 The Snowflake Information Schema functions as a comprehensive data dictionary. It is a set of views against the metadata layer that make it easy for you to examine some of the information about the databases, schemas, and tables you have built in Snowflake.
-
-[Snowflake Information Schema](https://docs.snowflake.com/en/sql-reference/info-schema)
 
 The Information Schema is implemented as a schema named `INFORMATION_SCHEMA` that Snowflake automatically creates in every database in an account.
 
@@ -152,14 +162,11 @@ The schema contains the following objects:
 - Table functions for historical and usage data across your account.
 
 ### Account usage
-
 The `SNOWFLAKE` database contains information about account usage. It is automatically added by Snowflake to each new account. It is sometimes called the <u>"Account Usage Share"</u> because it is shared by Snowflake with customers.
 
 `LOGIN_HISTORY` view → query <u>login attempts</u> by Snowflake users within the <u>last 365 days (1 year)</u>. Includes IP address where the login request originated from, error code, if the request was not successful and other. <u>Latency for the view may be up to 120 minutes (2 hours)</u>.
 
 `QUERY_HISTORY` view → query Snowflake query history by various dimensions (time range, session, user, warehouse, etc.) within the <u>last 365 days (1 year)</u>. <u>Latency for the view may be up to 45 minutes</u>.
-
-[Differences Between Account Usage and Information Schema](https://docs.snowflake.com/en/sql-reference/account-usage#differences-between-account-usage-and-information-schema)
 
 The Account Usage views and the corresponding views (or table functions) in the Snowflake Information Schema utilize identical structures and naming conventions, but with some key differences:
 
@@ -170,9 +177,6 @@ The Account Usage views and the corresponding views (or table functions) in the 
 | Retention of historical data | 1 Year | From 7 days to 6 months (varies by view/table function) |
 
 ### Access history; tracking read/write operations
-
-[Access History](https://docs.snowflake.com/en/user-guide/access-history)
-
 The records in this view facilitate regulatory compliance auditing and provide insights on popular and frequently accessed tables and columns because there is a direct link between the user (i.e. query operator), the query, the table or view, the column, and the data.
 
 Each row in the `ACCESS_HISTORY` view contains a single record per SQL statement. The record contains information about the source columns the query accessed directly and indirectly (i.e. the underlying tables that the data for the query comes from) and the projected columns the user sees in the query result.

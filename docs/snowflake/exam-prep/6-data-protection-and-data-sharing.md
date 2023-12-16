@@ -17,8 +17,6 @@ nav_order: 1
 
 ## 6.1 Outline Continuous Data Protection with Snowflake
 
-[Continuous Data Protection](https://docs.snowflake.com/en/user-guide/data-cdp)
-
 ### Time Travel
 Using Time Travel, you can perform the following actions within a defined period of time:
 - Query data in the past that has since been updated or deleted.
@@ -57,13 +55,9 @@ Data recovery through Fail-safe may take from several hours to several days to c
 | Business Critical| 7                 | ❌                 | ❌                |
 
 ### Data Encryption
-
 All ingested data stored in Snowflake tables, and all files stored in internal stages for data loading and unloading, are encrypted using <u>AES-256</u> strong encryption. 
 
 ### Cloning
-
-[CREATE <object> ... CLONE](https://docs.snowflake.com/en/sql-reference/sql/create-clone)
-
 For databases and schemas, cloning is <u>recursive</u>.
 
 If the source object is a database or schema, <u>the clone inherits all granted privileges on the clones of all child objects</u> contained in the source object. 
@@ -75,9 +69,6 @@ The following object types are <u>**not** cloned</u>:
 - Internal (Snowflake) stages
 
 ### Replication
-
-[Introduction to replication and failover](https://docs.snowflake.com/en/user-guide/account-replication-intro)
-
 Database and share replication are available to all accounts.
 
 Replication of other account objects & failover/failback require Business Critical Edition (or higher). 
@@ -134,7 +125,6 @@ Possible failures and how Snowflake mitigates these:
 | Multi-region failure | Cloud provider loss of service availability in multiple zones | - Cross-cloud database replication and failover          |
 
 ### 6.1: Practice questions
-
 Which of the following objects is not covered by Time Travel?
 
 > A. Schemas 
@@ -374,7 +364,6 @@ Secure data sharing also powers the Snowflake Data Marketplace, which is <u>avai
 By default, the privileges required to create and manage shares are granted only to the `ACCOUNTADMIN` role.
 
 ### Secure Data Sharing (for example, Direct Share, Listing)
-
 Secure Data Sharing lets you share selected objects in a database in your account with other Snowflake accounts. You can share the following Snowflake database objects:
 - Tables
 - Dynamic tables
@@ -396,7 +385,6 @@ Option 2: Grant privileges on objects directly to a share.
 You choose which accounts can consume data from the share by adding the accounts to the share.
 
 ### 6.2: Practice Questions
-
 By default, which Snowflake role is required to create a share?
 
 > A. <u>ACCOUNTADMIN</u>
