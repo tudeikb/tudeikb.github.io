@@ -1,8 +1,13 @@
+# frozen_string_literal: true
+
 source "https://rubygems.org"
-gemspec
 
-gem "jekyll-github-metadata", ">= 2.15"
+# gem "rails"
 
-gem "jekyll-include-cache", group: :jekyll_plugins
+gem "jekyll", "~> 3.9.0"
 
-gem "html-proofer", "~> 5.0", :group => :development
+gem "webrick", "~> 1.8"
+
+gem "minima"
+gem "kramdown-parser-gfm"
+gem "jekyll-include-cache"
